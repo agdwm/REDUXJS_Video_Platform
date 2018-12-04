@@ -5,11 +5,12 @@ $form.addEventListener('submit', handleSubmit);
 
 function handleSubmit (e) {
 	e.preventDefault();
-	// 'FormData' is a Native Browser's Api that will receive by param a DOM element.
-	// FormData will save the data of the form in order we can serialize them or send them to the server.
 	const data = new FormData($form);
 	const title = data.get('title');
-	console.log(title);
+	store.dispatch({
+		type: 'ADD_SONG',
+		payload: {title} //title: title
+	})
 }
 
 const initialState = [
@@ -32,6 +33,7 @@ const store = createStore(
 
 const $container = document.getElementById('playlist');
 const playlist = store.getState();
+
 playlist.forEach(el => {
 	const template = document.createElement('p');
 	template.textContent = el.title;
